@@ -67,8 +67,31 @@ const init = () => {
 const clickHandler = event => {
   mouse.x = event.clientX;
   mouse.y = event.clientY;
+  posDecimalTen(mouse.x);
+  console.log(posDecimalTen(mouse.x));
   blocks.push(new Block($canvasLevelBuilder, mouse));
 };
+
+const posDecimalTen =pos=>{
+  let strPos= pos.toString();
+  let posAr= strPos.split(``);
+  console.log(posAr[posAr.length-1], posAr);  
+  posAr[posAr.length]
+  if (parseInt(posAr[posAr.length - 1])<=4){
+    //console.log(posAr[posAr.length - 1])
+    posAr[posAr.length - 1]=`0`;
+  }else{
+    posAr[posAr.length - 1] = `0`;
+    if (posAr[posAr.length - 2]===`9`){
+      posAr[posAr.length - 2] = 0;
+      posAr[posAr.length - 3]= parseInt(posAr[posAr.length - 3])+1;
+    }else{
+      //posAr[posAr.length - 2] = parseInt(posAr[posAr.length - 2])+= 1;
+      posAr[posAr.length - 2] =parseInt(posAr[posAr.length - 2])+1 ;
+    }
+  }
+  return parseInt(posAr.join(``));
+}
 
 
 const draw = () => {
