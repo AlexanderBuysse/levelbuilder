@@ -10,18 +10,19 @@ import Player from './classes/Player.js';
 
 
 
-/*const $canvas = document.querySelector(`.canvas`),
+const $canvas = document.querySelector(`.canvas`),
   ctx = $canvas.getContext(`2d`)
 
-  let arrows;*/
+  let arrows;
 
 const $canvasLevelBuilder = document.querySelector(`#canvas`),
   ctxL = $canvasLevelBuilder.getContext(`2d`),
   blocks = [];
 
   let mouse;
+  let isLevelBuilding= true;
 
-const level = [[
+/*const level = [[
   `                                 xxxxxxxxxx                                  `,
   `      xxxxxxxxxxxxxxxxxxxxxxxxxxxx   o    xxxxxxxxxxxxxxxxxxxxxxxxxx         `,
   `      x   v                      x        x                  v  v  x         `,
@@ -50,21 +51,26 @@ const level = [[
   `                                                                             `,
   `                                                                             `,
   `                                                                                `
-  ]];
+  ]];*/
+
+let level = [];
 
 const init = () => {
-  mouse = new Vector($canvasLevelBuilder.width / 2, $canvasLevelBuilder.height / 2);
-  $canvasLevelBuilder.addEventListener(`click`, e => clickHandler(e));
-  draw();
-  //arrows = trackKeys(arrowCodes);
-  //runGame(level, CanvasDisplay);
+    document.querySelector(`.submit`).addEventListener(`click`, e => clickSubmitHandel(e));
+    mouse = new Vector($canvasLevelBuilder.width / 2, $canvasLevelBuilder.height / 2);
+    $canvasLevelBuilder.addEventListener(`click`, e => clickHandler(e));
+    draw();
+    arrows = trackKeys(arrowCodes);
+    runGame(level, CanvasDisplay);
 };
+
+const clickSubmitHandel = e=>{
+  isLevelBuilding= false;
+}
 
 const clickHandler = event => {
   mouse.x = posDecimalTen(event.clientX);
   mouse.y = posDecimalTen(event.clientY);
-  //posDecimalTen(mouse.x);
-  //console.log(mouse.x);
   if(!checkIfblock(mouse)){
     blocks.push(new Block($canvasLevelBuilder, mouse, checkWhichElement()));
   }
@@ -111,10 +117,38 @@ const posDecimalTen =pos=>{
 
 
 const draw = () => {
-  ctxL.fillStyle = `black`;
-  ctxL.fillRect(0, 0, $canvasLevelBuilder.width, $canvasLevelBuilder.height);
-  blocks.forEach(block => block.draw());
-  window.requestAnimationFrame(draw);
+  if(isLevelBuilding){
+    ctxL.fillStyle = `black`;
+    ctxL.fillRect(0, 0, $canvasLevelBuilder.width, $canvasLevelBuilder.height);
+    blocks.forEach(block => block.draw());
+    window.requestAnimationFrame(draw);
+  }else{
+    let newPlan=[];
+    for (let y = 0; y < 50; y++) {
+      let lineY=[];
+      for (let x = 0; x < 50; x++) {
+        let lineX=[];
+        blocks.forEach(block=>{
+          if (block.pos.x==x*10&&block.pos.y==y*10){
+            if(block.color==`orange`){
+              lineX.push(`o`);
+            } else if (block.color == `grey`){
+              lineX.push(`@`); 
+            }else{
+              lineX.push(`x`);
+            }
+          }
+        })
+        
+        if ( lineX.length ==0) {
+          lineX.push(` `);
+        }
+        lineY.push(lineX);    
+      }
+      newPlan.push(lineY.join(``));
+    }
+    level.push(newPlan);
+  }
 };
 
 
