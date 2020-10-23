@@ -1,9 +1,6 @@
 import { arrowCodes} from './globalV/gameSetting.js';
 import Vector from './classes/Vector.js';
-import Particle from './classes/Particle.js';
 import CanvasDisplay from './classes/Canvas.js';
-import Enemy from './classes/Enemy.js';
-import Goal from './classes/Goal.js';
 import Level from './classes/Level.js';
 import Block from './classes/Block.js';
 import Player from './classes/Player.js';
@@ -22,46 +19,13 @@ const $canvasLevelBuilder = document.querySelector(`#canvas`),
   let mouse;
   let isLevelBuilding= true;
 
-/*const level = [[
-  `                                 xxxxxxxxxx                                  `,
-  `      xxxxxxxxxxxxxxxxxxxxxxxxxxxx   o    xxxxxxxxxxxxxxxxxxxxxxxxxx         `,
-  `      x   v                      x        x                  v  v  x         `,
-  `      x                                                            x         `,
-  `      x                                                            x         `,
-  `      x      xxxxxxxxxxxxxxx                       xxxxxxxxxx      x         `,
-  `      x                    xxxxxxxxxxxxxxxxxxxxxxxxx               x         `,
-  `      x                    x                       x               xxxxxxxx  `,
-  `      xxxxxxxxxxxxxxx      x                       x               x!!!!!!x  `,
-  `      x                    x                       xxxxxxxxxx      x      x  `,
-  `      x                    x      x       x                 x      x      x  `,
-  `      x      x             x      x       x                 x      x      x  `,
-  `      x      x             x      x       x                 x      x      x  `,
-  `      x      x   xxxxxxxxxxx      x       xxxxxxxxxxxx      x             x  `,
-  `      x      x   x                x                  x      x             x  `,
-  `      x      x   x                x                  x      x             x  `,
-  `      x      x|||x                x                  x      x      x      x  `,
-  `  xxxxx      xxxxx         xxxxxxxx       xxxxxxx    x             x      x  `,
-  `  x                               x       x     x    x             x      x  `,
-  `  x                               x   @   x          x             x      x  `,
-  `  x                               x       x          x         |  |x||||||x  `,
-  `  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  `,
-  `                                                                             `,
-  `                                                                             `,
-  `                                                                             `,
-  `                                                                             `,
-  `                                                                             `,
-  `                                                                                `
-  ]];*/
-
-let level = [];
+  let level = [];
 
 const init = () => {
     document.querySelector(`.submit`).addEventListener(`click`, e => clickSubmitHandel(e));
     mouse = new Vector($canvasLevelBuilder.width / 2, $canvasLevelBuilder.height / 2);
     $canvasLevelBuilder.addEventListener(`click`, e => clickHandler(e));
     draw();
-    arrows = trackKeys(arrowCodes);
-    runGame(level, CanvasDisplay);
 };
 
 const clickSubmitHandel = e=>{
@@ -92,6 +56,8 @@ const checkWhichElement=()=>{
     return `lightblue`;
   } else if (document.querySelector(`.goal`).checked) {
     return `orange`;
+  } else if(document.querySelector(`.enemy`).checked) {
+    return `red`;
   }else{
     return `grey`;
   }
@@ -132,8 +98,10 @@ const draw = () => {
           if (block.pos.x==x*10&&block.pos.y==y*10){
             if(block.color==`orange`){
               lineX.push(`o`);
-            } else if (block.color == `grey`){
-              lineX.push(`@`); 
+            } else if (block.color == `grey`) {
+              lineX.push(`@`);
+            } else if(block.color == `red`){
+              lineX.push(`v`);
             }else{
               lineX.push(`x`);
             }
@@ -148,6 +116,9 @@ const draw = () => {
       newPlan.push(lineY.join(``));
     }
     level.push(newPlan);
+
+    arrows = trackKeys(arrowCodes);
+    runGame(level, CanvasDisplay);
   }
 };
 
