@@ -54,35 +54,22 @@ const level = [[
 
 const init = () => {
   mouse = new Vector($canvasLevelBuilder.width / 2, $canvasLevelBuilder.height / 2);
+  $canvasLevelBuilder.addEventListener(`click`, e => clickHandler(e));
   //$canvas.addEventListener(`click`, event => clickHandler(event));
-  $canvasLevelBuilder.addEventListener(`mousedown`, event => mouseDownHandler(event));
-  $canvasLevelBuilder.addEventListener(`mouseup`, event => mouseUpHandler(event));
+
+  /*$canvasLevelBuilder.addEventListener(`mousedown`, event => mouseDownHandler(event));
+  $canvasLevelBuilder.addEventListener(`mouseup`, event => mouseUpHandler(event));*/
   draw();
   //arrows = trackKeys(arrowCodes);
   //runGame(level, CanvasDisplay);
-
 };
 
-const mouseDownHandler = event => {
-  console.log(event)
-  $canvasLevelBuilder.addEventListener(`mousemove`, event => mousemoveHandler(event));
-};
-
-const mouseUpHandler = event => {
-  console.log(event)
-  $canvasLevelBuilder.addEventListener(`mousemove`, event => mousemoveHandler(event));
-};
-
-const mousemoveHandler = event => {
+const clickHandler = event => {
   mouse.x = event.clientX;
   mouse.y = event.clientY;
   blocks.push(new Block($canvasLevelBuilder, mouse));
-}
-
-const resize = event => {
-  $canvasLevelBuilder.width = window.innerWidth;
-  $canvasLevelBuilder.height = window.innerHeight;
 };
+
 
 const draw = () => {
   ctxL.fillStyle = `black`;
