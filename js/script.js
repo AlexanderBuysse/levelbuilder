@@ -5,15 +5,21 @@ import CanvasDisplay from './classes/Canvas.js';
 import Enemy from './classes/Enemy.js';
 import Goal from './classes/Goal.js';
 import Level from './classes/Level.js';
+import Block from './classes/Block.js';
 import Player from './classes/Player.js';
 
 
 
-//const $canvas = document.querySelector(`.canvas`),
-  //ctx = $canvas.getContext(`2d`),
-  //mouse = new Vector(0, 0);
+/*const $canvas = document.querySelector(`.canvas`),
+  ctx = $canvas.getContext(`2d`)
 
-  let arrows;
+  let arrows;*/
+
+const $canvasLevelBuilder = document.querySelector(`#canvas`),
+  ctxL = $canvasLevelBuilder.getContext(`2d`),
+  blocks = [];
+
+  let mouse;
 
 const level = [[
   `                                 xxxxxxxxxx                                  `,
@@ -47,17 +53,45 @@ const level = [[
   ]];
 
 const init = () => {
-  
+  mouse = new Vector($canvasLevelBuilder.width / 2, $canvasLevelBuilder.height / 2);
+  //$canvas.addEventListener(`click`, event => clickHandler(event));
+  $canvasLevelBuilder.addEventListener(`mousedown`, event => mouseDownHandler(event));
+  $canvasLevelBuilder.addEventListener(`mouseup`, event => mouseUpHandler(event));
+  draw();
   //arrows = trackKeys(arrowCodes);
   //runGame(level, CanvasDisplay);
 
 };
 
-const elt = (name, className) => {
-  let elt = document.createElement(name);
-  if (className) elt.className = className;
-  return elt;
+const mouseDownHandler = event => {
+  console.log(event)
+  $canvasLevelBuilder.addEventListener(`mousemove`, event => mousemoveHandler(event));
 };
+
+const mouseUpHandler = event => {
+  console.log(event)
+  $canvasLevelBuilder.addEventListener(`mousemove`, event => mousemoveHandler(event));
+};
+
+const mousemoveHandler = event => {
+  mouse.x = event.clientX;
+  mouse.y = event.clientY;
+  blocks.push(new Block($canvasLevelBuilder, mouse));
+}
+
+const resize = event => {
+  $canvasLevelBuilder.width = window.innerWidth;
+  $canvasLevelBuilder.height = window.innerHeight;
+};
+
+const draw = () => {
+  ctxL.fillStyle = `black`;
+  ctxL.fillRect(0, 0, $canvasLevelBuilder.width, $canvasLevelBuilder.height);
+  blocks.forEach(block => block.draw());
+  window.requestAnimationFrame(draw);
+};
+
+
 
 const trackKeys = codes => {
   let pressed = {};
