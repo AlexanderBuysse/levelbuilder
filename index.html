@@ -11,32 +11,32 @@
 
 <body>
 	<div class="container">
-		<div class="dead-menu">
-			<h1 class="title"></h1>
-			<a href="" class="button retry"></a>
+	</div>
+		<div class="levelbuilder">
+			<canvas width="500" height="500" id="canvas"></canvas>
+			<br>
+			<label><span class="lightblue">wall</span>
+				<input type="radio" class="wall" checked="checked" name="radio">
+			</label><br>
+			<label><span class="grey">player</span>
+				<input type="radio" class="player" name="radio">
+			</label><br>
+			<label><span class="orange">goal</span> 
+				<input type="radio" class="goal" name="radio">
+			</label><br>
+			<label><span class="red">enemy</span>
+				<input type="radio" class="enemy" name="radio">
+			</label>
+
+			<br>
+			<p class="message red">you need at least 1 player</p>
+			<button class="submit">play your own level</button>
 		</div>
-	</div>
-	<div class="levelbuilder">
-		<canvas width="500" height="500" id="canvas"></canvas>
-		<br>
-		<label>wall
-			<input type="radio" class="wall" checked="checked" name="radio">
-		</label><br>
-		<label>player
-			<input type="radio" class="player" name="radio">
-		</label><br>
-		<label>goal
-			<input type="radio" class="goal" name="radio">
-		</label>
-		<label>enemy
-			<input type="radio" class="enemy" name="radio">
-		</label>
-
-		<br>
-		<button class="submit">play your own level</button>
-	</div>
-
-	<canvas class="canvas" width="1680" height="1000"></canvas>
+								<div class="dead-menu">
+									<h1 class="title">make your own level</h1>
+									<a href="" class="button retry"></a>
+								</div>
+	<canvas class="canvas" width="1600" height="800"></canvas>
 	<script type="module" src="js/script.js"></script>
 </body>
 

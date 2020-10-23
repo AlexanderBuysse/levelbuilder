@@ -18,6 +18,7 @@ const $canvasLevelBuilder = document.querySelector(`#canvas`),
 
   let mouse;
   let isLevelBuilding= true;
+  let hasPlayer=false;
 
   let level = [];
 
@@ -56,7 +57,7 @@ const checkWhichElement=()=>{
     return `lightblue`;
   } else if (document.querySelector(`.goal`).checked) {
     return `orange`;
-  } else if(document.querySelector(`.enemy`).checked) {
+  } else if (document.querySelector(`.enemy`).checked) {
     return `red`;
   }else{
     return `grey`;
@@ -83,10 +84,15 @@ const posDecimalTen =pos=>{
 
 
 const draw = () => {
-  if(isLevelBuilding){
+  if(isLevelBuilding||!hasPlayer){
     ctxL.fillStyle = `black`;
     ctxL.fillRect(0, 0, $canvasLevelBuilder.width, $canvasLevelBuilder.height);
     blocks.forEach(block => block.draw());
+    blocks.forEach(block => {if(block.color==`grey`){
+      hasPlayer=true;
+      document.querySelector(`.message`).textContent=`you have at least 1 player, you can play now`;
+    }
+    })
     window.requestAnimationFrame(draw);
   }else{
     let newPlan=[];
@@ -176,8 +182,7 @@ const runGame = (plans, Display) => {
       if (status == `lost`) {
         const $buttonretry = document.querySelector(`.retry`)
         const buttonRetryHandler = e => {
-          e.preventDefault
-          startLevel(plans[n])
+          startLevel(plans[0])
         }
         $buttonretry.addEventListener(`click`, buttonRetryHandler)
       } else if (n < plans.length - 1) {

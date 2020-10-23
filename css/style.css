@@ -12,6 +12,7 @@ html {
 body {
   font-size: 2rem;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  background-color: wheat;
 }
 
 .wall{
@@ -26,8 +27,26 @@ body {
   color:grey;
 }
 
-.checked{
-  font-size: 3rem;
-  font-weight: bold;
-  border: solid;
+.red{
+  color: red;
+}
+
+.orange{
+  color: orange;
+}
+
+.lightblue{
+  color: lightblue;
+}
+
+.grey{
+  color: grey;
+}
+
+.message{
+  margin-top: 2rem;
+}
+
+.title{
+  font-size: 10rem;
 }
