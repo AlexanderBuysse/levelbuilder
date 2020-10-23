@@ -56,7 +56,6 @@ const init = () => {
   mouse = new Vector($canvasLevelBuilder.width / 2, $canvasLevelBuilder.height / 2);
   $canvasLevelBuilder.addEventListener(`click`, e => clickHandler(e));
   //$canvas.addEventListener(`click`, event => clickHandler(event));
-
   /*$canvasLevelBuilder.addEventListener(`mousedown`, event => mouseDownHandler(event));
   $canvasLevelBuilder.addEventListener(`mouseup`, event => mouseUpHandler(event));*/
   draw();
@@ -65,20 +64,32 @@ const init = () => {
 };
 
 const clickHandler = event => {
-  mouse.x = event.clientX;
-  mouse.y = event.clientY;
-  posDecimalTen(mouse.x);
-  console.log(posDecimalTen(mouse.x));
-  blocks.push(new Block($canvasLevelBuilder, mouse));
+  mouse.x = posDecimalTen(event.clientX);
+  mouse.y = posDecimalTen(event.clientY);
+  //posDecimalTen(mouse.x);
+  //console.log(mouse.x);
+  if(!checkIfblock(mouse)){
+
+    blocks.push(new Block($canvasLevelBuilder, mouse));
+  }
 };
+
+const checkIfblock=pos=>{
+  let taken= false;
+
+  for (let i = 0; i < blocks.length; i++) {
+    if (blocks[i].pos.x == pos.x && blocks[i].pos.y == pos.y){
+      taken=true;
+    }
+  }
+  return taken;
+}
 
 const posDecimalTen =pos=>{
   let strPos= pos.toString();
   let posAr= strPos.split(``);
-  console.log(posAr[posAr.length-1], posAr);  
-  posAr[posAr.length]
+
   if (parseInt(posAr[posAr.length - 1])<=4){
-    //console.log(posAr[posAr.length - 1])
     posAr[posAr.length - 1]=`0`;
   }else{
     posAr[posAr.length - 1] = `0`;
@@ -86,8 +97,7 @@ const posDecimalTen =pos=>{
       posAr[posAr.length - 2] = 0;
       posAr[posAr.length - 3]= parseInt(posAr[posAr.length - 3])+1;
     }else{
-      //posAr[posAr.length - 2] = parseInt(posAr[posAr.length - 2])+= 1;
-      posAr[posAr.length - 2] =parseInt(posAr[posAr.length - 2])+1 ;
+      posAr[posAr.length - 2] =parseInt(posAr[posAr.length - 2])+1;
     }
   }
   return parseInt(posAr.join(``));
