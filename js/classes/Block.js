@@ -1,13 +1,14 @@
 import Vector from "./Vector.js";
 
 class Block {
-  constructor($canvas, mousePos) {
+  constructor($canvas, mousePos, color) {
     this.$canvas = $canvas;
     this.ctx = $canvas.getContext(`2d`);
     this.pos = new Vector(mousePos.x,mousePos.y);
+    this.color=color;
   }
   draw() {
-    this.ctx.fillStyle = `white`;
+    this.ctx.fillStyle = this.color;
     this.ctx.fillRect(this.pos.x, this.pos.y, 10, 10);
   }
 }

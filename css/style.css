@@ -14,3 +14,20 @@ body {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
+.wall{
+  color: lightblue;
+}
+
+.goal{
+  color: orange;
+}
+
+.player{
+  color:grey;
+}
+
+.checked{
+  font-size: 3rem;
+  font-weight: bold;
+  border: solid;
+}

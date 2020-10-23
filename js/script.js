@@ -55,9 +55,6 @@ const level = [[
 const init = () => {
   mouse = new Vector($canvasLevelBuilder.width / 2, $canvasLevelBuilder.height / 2);
   $canvasLevelBuilder.addEventListener(`click`, e => clickHandler(e));
-  //$canvas.addEventListener(`click`, event => clickHandler(event));
-  /*$canvasLevelBuilder.addEventListener(`mousedown`, event => mouseDownHandler(event));
-  $canvasLevelBuilder.addEventListener(`mouseup`, event => mouseUpHandler(event));*/
   draw();
   //arrows = trackKeys(arrowCodes);
   //runGame(level, CanvasDisplay);
@@ -69,8 +66,7 @@ const clickHandler = event => {
   //posDecimalTen(mouse.x);
   //console.log(mouse.x);
   if(!checkIfblock(mouse)){
-
-    blocks.push(new Block($canvasLevelBuilder, mouse));
+    blocks.push(new Block($canvasLevelBuilder, mouse, checkWhichElement()));
   }
 };
 
@@ -83,6 +79,16 @@ const checkIfblock=pos=>{
     }
   }
   return taken;
+}
+
+const checkWhichElement=()=>{
+  if (document.querySelector(`.wall`).checked) {
+    return `lightblue`;
+  } else if (document.querySelector(`.goal`).checked) {
+    return `orange`;
+  }else{
+    return `grey`;
+  }
 }
 
 const posDecimalTen =pos=>{
